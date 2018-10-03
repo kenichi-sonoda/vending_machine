@@ -2,22 +2,22 @@ PRICE_COKE = 100
 MONEYS = [1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000]
 VENDING_USABLE_MONEYS = [10, 50, 100, 500, 1000]
 DRINKS = {
-  "coke" => {
+  coke: {
     price: 150,
     stock: 5,
     temperature: "cold"
   },
-  "cider" => {
+  cider: {
     price: 100,
     stock: 5,
     temperature: "cold"
   },
-  "green_tea" => {
+  green_tea: {
     price: 150,
     stock: 5,
     temperature: "hot"
   },
-  "coffee" => {
+  coffee: {
     price: 100,
     stock: 5,
     temperature: "hot"
