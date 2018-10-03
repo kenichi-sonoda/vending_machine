@@ -7,4 +7,5 @@ else
   puts "ちなみにif文の（）も要りません"
 end
 
+# 一行でまとめることもできる
 puts "後置if" if true
