@@ -1,1 +1,5 @@
-puts "コカ・コーラ"
+def buy
+  puts "コカ・コーラ"
+end
+
+buy
