@@ -1,4 +1,3 @@
-PRICE_COKE = 100
 MONEYS = [1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000]
 VENDING_USABLE_MONEYS = [10, 50, 100, 500, 1000]
 DRINKS = {
@@ -50,9 +49,10 @@ end
 # insertで弾いてくれてるので確実に引数はお金です
 # 飲み物排出細胞
 def vend money
-  if money >= PRICE_COKE
-    change = money - PRICE_COKE
-    puts "コカ・コーラ（#{PRICE_COKE}円）を買いました。"
+  drink = DRINKS[:coke]
+  if money >= drink[:price]
+    change = money - drink[:price]
+    puts "コカ・コーラ（#{drink[:price]}円）を買いました。"
     puts "おつりは#{change}円です。" if change > 0
   else
     puts "足りねーよ！#{money}円は返すわ。"
