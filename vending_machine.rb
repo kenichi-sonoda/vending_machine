@@ -1,6 +1,28 @@
 PRICE_COKE = 100
 MONEYS = [1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000]
 VENDING_USABLE_MONEYS = [10, 50, 100, 500, 1000]
+DRINKS = {
+  coke: {
+    price: 150,
+    stock: 5,
+    temperature: "cold"
+  },
+  cider: {
+    price: 100,
+    stock: 5,
+    temperature: "cold"
+  },
+  green_tea: {
+    price: 150,
+    stock: 5,
+    temperature: "hot"
+  },
+  coffee: {
+    price: 100,
+    stock: 5,
+    temperature: "hot"
+  },
+}
 
 # そもそもお金ですか？どら焼きじゃないですか？
 # という判断がしたかったのでここで切り分けました
