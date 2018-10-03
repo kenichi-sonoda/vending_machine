@@ -11,10 +11,19 @@ def buy money
       puts "足りねーよ！"
     end
   else
-    puts "買えねーよ！"
+    if is_money? money
+      puts "買えねーよ！#{money}円は返すわ。"
+    else
+      puts "買えねーよ！どら焼きは返すわ。"
+    end
   end
 end
 
+def is_money? object
+  Integer === object
+end
+
+buy 0
 buy 10
 buy 50
 buy 100
