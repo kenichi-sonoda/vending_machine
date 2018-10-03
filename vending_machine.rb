@@ -1,5 +1,12 @@
 PRICE_COKE = 100
 
+# 金をうけつける細胞
+def receiveMoney object
+  # お金以外のものがきたら弾くよ
+end
+
+# insertで弾いてくれてるので確実に引数はお金です
+# 飲み物排出細胞
 def buy money
   usable_money = [10, 50, 100, 500, 1000]
   if usable_money.include?(money)
@@ -28,12 +35,16 @@ def is_money? object
   Integer === object
 end
 
-buy 0
+# buyが受け付けるテスト例
 buy 10
 buy 50
 buy 100
 buy 500
 buy 1000
+# receiveMoneyが受け付けるテスト例
+buy 0
+buy 1
+buy 5
 buy 2000
 buy 5000
 buy 3.14
