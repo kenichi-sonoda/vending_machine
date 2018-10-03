@@ -1,21 +1,27 @@
 PRICE_COKE = 100
+MONEYS = [1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000]
+VENDING_USABLE_MONEYS = [10, 50, 100, 500, 1000]
+
+# そもそもお金ですか？どら焼きじゃないですか？
+# という判断がしたかったのでここで切り分けました
+def money? object
+  Integer === object && MONEYS.include?(object)
+end
+# お金だけど、自動販売機が受け付けるお金ですか？
+def usable_money? money
+  VENDING_USABLE_MONEYS.include?(money)
+end
 
 # 金をうけつける細胞
 # お金以外の物は確実に弾く
-# お金でも[10, 50, 100, 500, 1000]以外は弾く
-def receiveMoney object
-  usable_money = [10, 50, 100, 500, 1000]
-  # お金以外のものがきたら弾くよ
-  if usable_money.include?(money)
-  end
-  if is_money? money
-    if money == 0
-      puts "お金は入れようね"
-    else
-      puts "#{money}円は返すわ。"
+def receive_money object
+  if money? object
+    # お金でも[10, 50, 100, 500, 1000]以外は弾く
+    unless usable_money? object
+      puts "#{object}円は返すわ。"
     end
   else
-    puts "どら焼きは返すわ。"
+    puts "お金を入れてね。"
   end
 end
 
@@ -31,24 +37,20 @@ def vend money
   end
 end
 
-def is_money? object
-  Integer === object
-end
-
 # vendが受け付けるテスト例
 vend 10
 vend 50
 vend 100
 vend 500
 vend 1000
-# receiveMoneyが受け付けるテスト例
-# receiveMoney 0
-# receiveMoney 1
-# receiveMoney 5
-# receiveMoney 2000
-# receiveMoney 5000
-# receiveMoney 3.14
-# receiveMoney 99
-# receiveMoney 120
-# receiveMoney "どら焼き"
-# receiveMoney "100"
+# receive_moneyが受け付けるテスト例
+receive_money 0
+receive_money 1
+receive_money 5
+receive_money 2000
+receive_money 5000
+receive_money 3.14
+receive_money 99
+receive_money 120
+receive_money "どら焼き"
+receive_money "100"
