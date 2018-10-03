@@ -11,10 +11,15 @@ def buy money
       puts "足りねーよ！"
     end
   else
+    print "買えねーよ！"
     if is_money? money
-      puts "買えねーよ！#{money}円は返すわ。"
+      if money == 0
+        puts "お金は入れようね"
+      else
+        puts "#{money}円は返すわ。"
+      end
     else
-      puts "買えねーよ！どら焼きは返すわ。"
+      puts "どら焼きは返すわ。"
     end
   end
 end
@@ -29,6 +34,9 @@ buy 50
 buy 100
 buy 500
 buy 1000
+buy 2000
+buy 5000
+buy 3.14
 buy 99
 buy 120
 buy "どら焼き"
