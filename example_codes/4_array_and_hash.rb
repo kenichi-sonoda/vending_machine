@@ -2,25 +2,24 @@
 
 # array 要素を複数個格納できるクラス
 # 宣言
-p archers = ["ナポレオン", "エミヤ", "ロビンフッド"]
+p archers = ["ナポレオン", "エミヤ", "ロビンフッド", "アーラシュ"]
+
 # 要素の追加・削除
-p archers.push("アーラシュ") # 要素追加はpushだったり、
-p archers << "新宿のアーチャー" # 色々追加方法があります。
-p archers.delete_at(archers.length - 1) # 削除も色々あります。一番最後の要素を削除しときましょう。
-p archers
+p archers.push("新宿のアーチャー") # 要素を追加するメソッドや
+p archers.delete_at(archers.length - 1) # 削除するメソッドも用意されています。
+p archers # 現状を確認してみましょう
 
 # 先頭の参照
-p archers[0] # 配列に添え字で呼び出せるし、
 p archers.first # 一番最初を呼び出すメソッドも用意されてる。
+p archers[0] # 添え字でも呼び出せます。
 # 末尾の参照
-p archers[3] # 配列の末尾要素を選択するには直接添字もいいけど、
-p archers[archers.length - 1] # 要素数から-1を引いたり、
-p archers.last # 一番最後をメソッドも用意されてるし、
-p archers[-1] # そもそも-1で末尾から参照していってくれる
-p archers[-2] # こうするとロビンになるよ
+p archers.last # 一番最後を参照するメソッドも用意されてるし、
+p archers[-1] # そもそも-1で末尾から参照していってくれる。
+p archers[-2] # こうするとロビンになるよ。
 # 範囲外を参照するとnilが返るので気をつけましょう
 p archers[4]
 p archers[-5]
+
 puts "=========="
 
 # hash キーから呼び出すことができる配列の上位互換
@@ -42,7 +41,7 @@ puts "=========="
 # また :シンボル => 5 の矢印演算子を書くのが手間なので省略した書き方をしました
 # (:シンボル => 5) = (シンボル: 5)
 archers_hash = {
-  ナポレオン: {
+  "ナポレオン": {
     rarity: 5,
     full_name: "ナポレオン＝ボナパルト",
     Quick: 1,
@@ -50,7 +49,7 @@ archers_hash = {
     Buster: 2,
     lethal_weapon: "アルク・ドゥ・トリオンフ・ドゥ・レトワール"
   },
-  エミヤ: {
+  "エミヤ": {
     rarity: 4,
     full_name: "閲覧権限がありません",
     Quick: 1,
@@ -58,7 +57,7 @@ archers_hash = {
     Buster: 1,
     lethal_weapon: "アンリミテッドブレイドワークス"
   },
-  ロビンフッド: {
+  "ロビンフッド": {
     rarity: 3,
     full_name: "ロビンフッド",
     Quick: 2,
@@ -66,7 +65,7 @@ archers_hash = {
     Buster: 1,
     lethal_weapon: "イー・バウ"
   },
-  アーラシュ: {
+  "アーラシュ": {
     rarity: 1,
     full_name: "アーラシュ＝カマンガー",
     Quick: 1,
@@ -76,7 +75,7 @@ archers_hash = {
   }
 }
 
-puts "ナポレオンのステータス"
-p archers_hash[:ナポレオン] # 省略した書き方なので、呼び出し方は[:シンボル]となります
-puts "アーラシュの宝具"
-p archers_hash[:アーラシュ][:lethal_weapon] # 階層深くまで行くならさらにシンボルを重ねます
+puts "ナポレオンのステータス："
+p archers_hash[:"ナポレオン"] # 省略した書き方なので、呼び出し方は[:シンボル]となります
+puts "アーラシュの宝具："
+p archers_hash[:"アーラシュ"][:lethal_weapon] # 階層深くまで行くならさらにシンボルを重ねます
