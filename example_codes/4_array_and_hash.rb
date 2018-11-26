@@ -41,7 +41,7 @@ puts "=========="
 # また :シンボル => 5 の矢印演算子を書くのが手間なので省略した書き方をしました
 # (:シンボル => 5) = (シンボル: 5)
 archers_hash = {
-  "ナポレオン": {
+  napoleon: {
     rarity: 5,
     full_name: "ナポレオン＝ボナパルト",
     Quick: 1,
@@ -49,7 +49,7 @@ archers_hash = {
     Buster: 2,
     lethal_weapon: "アルク・ドゥ・トリオンフ・ドゥ・レトワール"
   },
-  "エミヤ": {
+  emiya: {
     rarity: 4,
     full_name: "閲覧権限がありません",
     Quick: 1,
@@ -57,7 +57,7 @@ archers_hash = {
     Buster: 1,
     lethal_weapon: "アンリミテッドブレイドワークス"
   },
-  "ロビンフッド": {
+  robin: {
     rarity: 3,
     full_name: "ロビンフッド",
     Quick: 2,
@@ -65,7 +65,7 @@ archers_hash = {
     Buster: 1,
     lethal_weapon: "イー・バウ"
   },
-  "アーラシュ": {
+  Arash: {
     rarity: 1,
     full_name: "アーラシュ＝カマンガー",
     Quick: 1,
@@ -76,6 +76,6 @@ archers_hash = {
 }
 
 puts "ナポレオンのステータス："
-p archers_hash[:"ナポレオン"] # 省略した書き方なので、呼び出し方は[:シンボル]となります
+p archers_hash[:napoleon] # 省略した書き方なので、呼び出し方は[:シンボル]となります
 puts "アーラシュの宝具："
-p archers_hash[:"アーラシュ"][:lethal_weapon] # 階層深くまで行くならさらにシンボルを重ねます
+p archers_hash[:Arash][:lethal_weapon] # 階層深くまで行くならさらにシンボルを重ねます
