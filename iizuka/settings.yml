@@ -1,0 +1,45 @@
+:items:
+  Water:
+    :price: 100
+    :name: ミネラルウォーター
+  Coffee:
+    :price: 120
+    :name: コーヒー
+  Coke:
+    :price: 150
+    :name: コーラ
+  GreenTea:
+    :price: 150
+    :name: 緑茶
+:money_kinds:
+  :yen_kinds:
+    -
+      :value: 1
+      :type:  :coin
+    -
+      :value: 5
+      :type:  :coin
+    -
+      :value: 10
+      :type:  :coin
+    -
+      :value: 50
+      :type:  :coin
+    -
+      :value: 100
+      :type:  :coin
+    -
+      :value: 500
+      :type:  :coin
+    -
+      :value: 1000
+      :type:  :bill
+    -
+      :value: 2000
+      :type:  :bill
+    -
+      :value: 5000
+      :type:  :bill
+    -
+      :value: 10000
+      :type:  :bill
