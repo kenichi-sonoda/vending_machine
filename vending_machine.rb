@@ -1,5 +1,5 @@
 # Let's enjoy (Mob) programming!!
-puts 'コーラ: 100円, ジンジャーエール :160円'
+puts 'コーラ : 100円, ジンジャーエール : 160円'
 puts '※ジンジャーエールは　160円ぴったり入れてください'
 puts 'お金を入れてください'
 money = gets.to_i
