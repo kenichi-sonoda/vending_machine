@@ -4,13 +4,19 @@ class VendingMachine
 
   # 投入可能な金額
   ALLOWD_MONEYS = [10, 50, 100, 500, 1000]
-  
 
-  def initialize(debug=false)
-    @stocks = {}   # 商品の在庫
-    @deposits = [] # 投入金
-    @returns = []  # 返却金
-    @change = 0    # おつり
+  # @state
+  # - :standby       => 現金が投入されていないおらず、ICカード待ちでもない状態
+  # - :cash_payments => 現金が投入されている状態
+  # - :ic_payments   => ICカード待ちの状態
+
+  def initialize debug=false
+    @stocks = {}      # 商品の在庫
+    @deposits = []    # 投入金
+    @returns = []     # 返却金
+    @change = 0       # おつり
+    @state = :standby # 自動販売機の待ち受け状態
+    @selected = nil   # 選択されている商品
     @debug = debug
   end
 
@@ -35,13 +41,17 @@ class VendingMachine
 
     yen = input
 
-    # 投入金に追加
+    # 許可され金種の場合
     if ALLOWD_MONEYS.include? yen.value
+      # 投入金に追加
       @deposits << yen
+      # 状態を遷移させる
+      @state = :cash_payments if @state == :standby
 
-    # 許可された種類のお金でなければ返却する
+    # 許可された種類のお金出ない場合
     else
       debug_puts '許可されていない金種です'
+      # 返却する
       @returns << yen
     end
 
@@ -68,16 +78,32 @@ class VendingMachine
       return nil
     end
 
-    # 投入金額が不足していたら何もせずに終了
-    if key.price > sum_deposits
-      debug_puts "投入金額が足りません ( 値段: ¥#{key.price} / 投入金額: ¥#{sum_deposits} )"
+    case @state
+    # 待ち受け/IC支払い状態の場合
+    when :standby, :ic_payments
+      # 商品選択状態にしてICカードの待ち受けを行う
+      @state = :ic_payments if @state == :standby
+      @selected = key
+      return nil
+
+    # 現金が投入されている場合
+  when :cash_payments
+      # 投入金額が不足していたら何もせずに終了
+      if key.price > sum_deposits
+        debug_puts "投入金額が足りません ( 値段: ¥#{key.price} / 投入金額: ¥#{sum_deposits} )"
+        return nil
+      end
+
+      # 投入金額の精算
+      pay(key.price)
+
+      @state = @deposits.length > 0 ? :cash_payments : :standby
+      return @stocks[key].shift
+
+    # 何もせずに終了
+    else
       return nil
     end
-
-    # 投入金額の精算
-    pay(key.price)
-
-    return @stocks[key].shift
   end
 
   # 商品在庫を出力する
@@ -97,6 +123,22 @@ class VendingMachine
   # 投入金額の合計を出力する
   def show_sum_deposits
     "合計投入額: ¥#{sum_deposits}"
+  end
+
+  # カードを読み取り
+  def touch card
+    # カード読み取り状態なければ何もせずに終了
+    return nil unless @state == :ic_payments
+
+    # 投入金額が不足していたら何もせずに終了
+    if @selected.price  > card.balance
+      debug_puts "残高が足りません ( 値段: ¥#{@selected.price} / ICカード残高: ¥#{card.balance} )"
+      return nil
+    end
+
+    # 精算(カード残高から商品の価格分引いて、商品を返す)
+    card.pay @selected.price
+    return @stocks[@selected].shift
   end
 
   #以下は内部メソッド

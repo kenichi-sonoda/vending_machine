@@ -1,7 +1,6 @@
 require 'yaml'
 require './money'
 
-puts %x{ pwd }
 yen_kinds = YAML.load_file('./settings.yml')[:money_kinds][:yen_kinds]
 
 RSpec.describe "Yenクラスの" do

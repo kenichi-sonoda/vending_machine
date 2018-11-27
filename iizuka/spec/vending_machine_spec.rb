@@ -2,6 +2,7 @@ require 'yaml'
 require './vending_machine'
 require './item'
 require './money'
+require './ic_card'
 
 items = YAML.load_file('./settings.yml')[:items]
 
@@ -100,6 +101,18 @@ RSpec.describe "VendingMachineクラスの" do
         end
       end
 
+      item = Object.const_get(items.keys.first)
+      context "お金を投入せずに#{item.name}を選択すると" do
+        before do
+          # 商品を選択する
+          @item = @vending_machine.select_item item
+        end
+
+        it "何も返されないこと" do
+          expect(@item).to be_nil
+        end
+      end
+
       context '120円(100円x1, 10円x2)を投入して' do
         before do
           # 100円玉x1, 10円玉x2を投入する
@@ -169,6 +182,57 @@ RSpec.describe "VendingMachineクラスの" do
 
           it "何も返されないこと" do
             expect(@item).to be_nil
+          end
+        end
+      end
+    end
+  end
+
+  describe 'payメソッドで' do
+    context "ストックに#{items.each_key.map{ |item_name| "#{Object.const_get(item_name).name}(#{Object.const_get(item_name).price}円)" }.join(', ')}が一つずつあるとき" do
+      before do
+        # ストックに商品を一つずつ追加する
+        items.each_key do |item_name|
+          @vending_machine.add_item Object.const_get(item_name).new
+        end
+      end
+
+      items.each_key do |item_name|
+        item = Object.const_get(item_name)
+        context "#{item.name}(#{item.price}円)を選択して" do
+          before do
+            # 商品を選択する
+            @item = @vending_machine.select_item item
+          end
+
+          context "残高500円のSuicaでタッチすると" do
+            before do
+              @suica = Suica.new(500)
+              @item = @vending_machine.touch @suica
+            end
+
+            it "#{item.name}が受け取れること" do
+              expect(@item.kind_of?(item)).to be_truthy
+            end
+
+            it "清算後のSuicaの残高が#{500 - item.price}円であること" do
+              expect(@suica.balance).to eq(500 - item.price)
+            end
+
+            it "#{item.name}のストックが減ること" do
+              expect(@vending_machine.stocks[item]).to be_empty
+            end
+          end
+
+          context "残高50円のSuicaでタッチすると" do
+            before do
+              @suica = Suica.new(50)
+              @item = @vending_machine.touch @suica
+            end
+
+            it "何も返されないこと" do
+              expect(@item).to be_nil
+            end
           end
         end
       end

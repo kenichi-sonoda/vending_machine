@@ -1,4 +1,5 @@
 require_relative './money.rb'
+require_relative './ic_card.rb'
 require_relative './item.rb'
 require_relative './vending_machine.rb'
 
@@ -22,7 +23,7 @@ puts
 
 #######################################
 # 処理開始
-TEST_CASE = 0
+TEST_CASE = 5
 case TEST_CASE
 when 0
   puts "Scenario: 150円を投入して120円の商品を購入する"
@@ -78,6 +79,39 @@ when 3
   puts "- 購入: #{item}"
   puts "- 在庫: #{vending_machine.stocks}"
   puts "- おつり: #{vending_machine.returns}"
+
+when 4
+  puts "Scenario: ICカード支払い"
+  suica = Suica.new
+  suica.charge 1000 # 1000円チャージ
+  puts "- カード残高: #{suica.balance}"
+
+  puts "- コーヒー(120円)を選択"
+  item = vending_machine.select_item Coffee
+  puts "- itemはnilのはず: #{item}"
+
+  # Suicaでタッチする
+  item = vending_machine.touch suica
+
+  puts "- 購入: #{item}"
+  puts "- 在庫: #{vending_machine.stocks}"
+  puts "- カード残高: #{suica.balance}"
+when 5
+  puts "Scenario: ICカード支払い(残高たりない)"
+  suica = Suica.new
+  suica.charge 100 # 1000円チャージ
+  puts "- カード残高: #{suica.balance}"
+
+  puts "- コーヒー(120円)を選択"
+  item = vending_machine.select_item Coffee
+  puts "- itemはnilのはず: #{item}"
+
+  # Suicaでタッチする
+  item = vending_machine.touch suica
+
+  puts "- 購入: #{item}"
+  puts "- 在庫: #{vending_machine.stocks}"
+  puts "- カード残高: #{suica.balance}"
 end
 
 puts
